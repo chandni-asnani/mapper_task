@@ -3,16 +3,20 @@ from pydantic import BaseModel
 from fuzzywuzzy import fuzz
 import psycopg2
 import requests
+import os
+from environs import Env
 
+env = Env()
+env.read_env()
 
 def db_connect():
     ''' Database connection method '''
     conn = psycopg2.connect(
-        database="mapper_task",
-        user="postgres",
-        password="postgres",
-        host="127.0.0.1",
-        port="5432",
+        database = env("DB_NAME"),
+        user = env("DB_USER"),
+        password = env("DB_PASSWORD"),
+        host = env("DB_HOST"),
+        port = env("DB_PORT"),
     )
     return conn
 
